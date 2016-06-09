@@ -42,6 +42,7 @@ int main(){
         cout << "Enter the coordinates of cell " << i+1 << " : ";
         cin >> x >> y;
         gridOne[x][y] = true;
+        printGrid(gridOne);
     }
 
     cout << "Grid setup is done. Start the game ? (y/n)" << endl;
