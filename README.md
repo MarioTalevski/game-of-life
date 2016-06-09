@@ -4,7 +4,7 @@ Also known simply as Life, is a cellular automaton devised by the British mathem
 
 The "game" is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Game of Life by creating an initial configuration and observing how it evolves, or, for advanced "players", by creating patterns with particular properties.
 
-![alt text](https://github.com/MarioTalevski/game-of-life/blob/master/cut.png "Logo Title Text 1")
+![alt text](https://github.com/MarioTalevski/game-of-life/blob/master/screenshot.png "Logo Title Text 1")
 
 The universe of the Game of Life is an infinite two-dimensional orthogonal grid of square cells, each of which is in one of two possible states, alive or dead. Every cell interacts with its eight neighbours, which are the cells that are horizontally, vertically, or diagonally adjacent. At each step in time, the following transitions occur:
 
