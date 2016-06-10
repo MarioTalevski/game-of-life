@@ -113,9 +113,9 @@ void determineState(bool gridOne[gridSize+1][gridSize+1]){
                     if(!(c == 0 && d == 0))
                     {
                         if(gridTwo[a+c][b+d])
-						{
-							++alive;
-						}
+				{
+					++alive;
+				}
                     }
                 }
             }
