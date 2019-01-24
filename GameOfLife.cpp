@@ -1,20 +1,26 @@
 // Author: Mario Talevski
-#include<iostream>
-#include<cstdlib>
+#include <iostream>
+#include <cstdlib>
 #include <unistd.h>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize+1][gridSize+1]);
 void determineState(bool gridOne[gridSize+1][gridSize+1]);
+void clearScreen(void);
 
 int main(){
 
     system( "color A" );
     bool gridOne[gridSize+1][gridSize+1] = {};
     int x,y,n;
-    char start;
+    string nc;
+    string start;
+    string filename;
     cout << "                         THE GAME OF life - Implementation in C++" << endl;
     cout << endl;
     cout << endl;
@@ -35,35 +41,84 @@ int main(){
     cout << "O - living cell" << endl;
     cout << ". - dead cell" << endl;
     cout << endl;
-    cout << "Enter the number of cells: ";
-    cin >> n;
-    for(int i=0;i<n;i++)
-    {
-        cout << "Enter the coordinates of cell " << i+1 << " : ";
-        cin >> x >> y;
-        gridOne[x][y] = true;
-        printGrid(gridOne);
-    }
+    cout << "Enter the number of cells, or 'r' to read cells from file: ";
+    cin >> nc;
+    cout << endl;
 
+    if ( nc == "r" )
+      {
+	while (true)
+	  {
+	    
+	    cout << "Enter name of file to read from: "<<endl;
+	    cin  >> filename;
+	    
+	    ifstream readfile(filename);
+	    if ( readfile.is_open() )
+	      {
+		string fileline,xx,yy;
+
+		while (getline(readfile,fileline))
+		  {
+		    stringstream ss(fileline);
+		    
+		    getline(ss,xx,' ');
+		    getline(ss,yy,' ');
+
+		    x = stoi(xx);
+		    y = stoi(yy);
+
+		    gridOne[x][y] = true;
+		  }
+		break;
+	      } else {
+	      cout << "No such file, try again." << endl;
+	    }
+	  }
+      }
+    else
+      {
+	
+	for(int i=0;i<stoi(nc);i++)
+	  {
+	    cout <<stoi(nc)<< "Enter the coordinates of cell " << i+1 << " : ";
+	    cin >> x >> y;
+	    gridOne[x][y] = true;
+	    printGrid(gridOne);
+	  }
+      }
     cout << "Grid setup is done. Start the game ? (y/n)" << endl;
     printGrid(gridOne);
     cin >> start;
-
-    if(start == 'y' || 'Y')
-    {
+    if( start == "y" || start == "Y" )
+      {
         while (true)
-        {
+	  {
             printGrid(gridOne);
             determineState(gridOne);
             usleep(200000);
-            system("CLS");
-        }
-    }
+            clearScreen();
+	  }
+      }
     else
-    {
+      {
         return 0;
-    }
+      }   
+}
 
+void clearScreen(void) {
+    // Tested and working on Ubuntu and Cygwin
+    #if defined(_WIN32) || defined(WIN32) || defined(__MINGW32__) || defined(__BORLANDC__)
+        #define OS_WIN
+    #endif
+  
+    #ifdef OS_WIN
+        system("CLS");
+    #endif
+
+    #if defined(linux) || defined(__CYGWIN__)
+        system("clear");
+    #endif
 }
 
 void printGrid(bool gridOne[gridSize+1][gridSize+1]){
