@@ -8,6 +8,7 @@ using namespace std;
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize+1][gridSize+1]);
 void determineState(bool gridOne[gridSize+1][gridSize+1]);
+void clearScreen(void);
 
 int main(){
 
@@ -56,7 +57,7 @@ int main(){
             printGrid(gridOne);
             determineState(gridOne);
             usleep(200000);
-            system("CLS");
+            clearScreen();
         }
     }
     else
@@ -64,6 +65,18 @@ int main(){
         return 0;
     }
 
+}
+
+void clearScreen(void) {
+  cout<<"Before"<<endl;
+#ifdef _WIN32
+  system("CLS");
+  cout<<"Win"<<endl;
+#endif
+  #ifdef linux
+  system("clear");
+  cout<<"Lin"<<endl;
+  #endif
 }
 
 void printGrid(bool gridOne[gridSize+1][gridSize+1]){
