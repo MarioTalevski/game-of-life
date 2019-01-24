@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -17,7 +18,8 @@ int main(){
     system( "color A" );
     bool gridOne[gridSize+1][gridSize+1] = {};
     int x,y,n;
-    char start;
+    string nc;
+    string start;
     string filename;
     cout << "                         THE GAME OF life - Implementation in C++" << endl;
     cout << endl;
@@ -40,10 +42,10 @@ int main(){
     cout << ". - dead cell" << endl;
     cout << endl;
     cout << "Enter the number of cells, or 'r' to read cells from file: ";
-
-    cin >> n;
+    cin >> nc;
     cout << endl;
-    if ( n == int('r') )
+
+    if ( nc == "r" )
       {
 	while (true)
 	  {
@@ -51,48 +53,57 @@ int main(){
 	    cout << "Enter name of file to read from: "<<endl;
 	    cin  >> filename;
 	    
-	    ifstream file(filename);
-	    if ( file.is_open() )
+	    ifstream readfile(filename);
+	    if ( readfile.is_open() )
 	      {
-		string fileline;
-		while (getline(file,fileline))
+		string fileline,xx,yy;
+
+		while (getline(readfile,fileline))
 		  {
-		    cin >> x >> y;
+		    stringstream ss(fileline);
+		    
+		    getline(ss,xx,' ');
+		    getline(ss,yy,' ');
+
+		    x = stoi(xx);
+		    y = stoi(yy);
+
 		    gridOne[x][y] = true;
 		  }
-		printGrid(gridOne);
 		break;
-	      }
+	      } else {
+	      cout << "No such file, try again." << endl;
+	    }
 	  }
-      } else {
-      for(int i=0;i<n;i++)
-	{
-	  cout << "Enter the coordinates of cell " << i+1 << " : ";
-	  cin >> x >> y;
-	  gridOne[x][y] = true;
-	  printGrid(gridOne);
-	}
-    }
-
+      }
+    else
+      {
+	
+	for(int i=0;i<stoi(nc);i++)
+	  {
+	    cout <<stoi(nc)<< "Enter the coordinates of cell " << i+1 << " : ";
+	    cin >> x >> y;
+	    gridOne[x][y] = true;
+	    printGrid(gridOne);
+	  }
+      }
     cout << "Grid setup is done. Start the game ? (y/n)" << endl;
     printGrid(gridOne);
     cin >> start;
-
-    if(start == 'y' || 'Y')
-    {
+    if( start == "y" || start == "Y" )
+      {
         while (true)
-        {
+	  {
             printGrid(gridOne);
             determineState(gridOne);
             usleep(200000);
             clearScreen();
-        }
-    }
+	  }
+      }
     else
-    {
+      {
         return 0;
-    }
-
+      }   
 }
 
 void clearScreen(void) {
