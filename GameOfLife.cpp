@@ -68,15 +68,18 @@ int main(){
 }
 
 void clearScreen(void) {
-  cout<<"Before"<<endl;
-#ifdef _WIN32
-  system("CLS");
-  cout<<"Win"<<endl;
-#endif
-  #ifdef linux
-  system("clear");
-  cout<<"Lin"<<endl;
-  #endif
+    // Tested and working on Ubuntu and Cygwin
+    #if defined(_WIN32) || defined(WIN32) || defined(__MINGW32__) || defined(__BORLANDC__)
+        #define OS_WIN
+    #endif
+  
+    #ifdef OS_WIN
+        system("CLS");
+    #endif
+
+    #if defined(linux) || defined(__CYGWIN__)
+        system("clear");
+    #endif
 }
 
 void printGrid(bool gridOne[gridSize+1][gridSize+1]){
