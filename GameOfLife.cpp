@@ -1,7 +1,9 @@
 // Author: Mario Talevski
-#include<iostream>
-#include<cstdlib>
+#include <iostream>
+#include <cstdlib>
 #include <unistd.h>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
@@ -16,6 +18,7 @@ int main(){
     bool gridOne[gridSize+1][gridSize+1] = {};
     int x,y,n;
     char start;
+    string filename;
     cout << "                         THE GAME OF life - Implementation in C++" << endl;
     cout << endl;
     cout << endl;
@@ -36,14 +39,39 @@ int main(){
     cout << "O - living cell" << endl;
     cout << ". - dead cell" << endl;
     cout << endl;
-    cout << "Enter the number of cells: ";
+    cout << "Enter the number of cells, or 'r' to read cells from file: ";
+
     cin >> n;
-    for(int i=0;i<n;i++)
-    {
-        cout << "Enter the coordinates of cell " << i+1 << " : ";
-        cin >> x >> y;
-        gridOne[x][y] = true;
-        printGrid(gridOne);
+    cout << endl;
+    if ( n == int('r') )
+      {
+	while (true)
+	  {
+	    
+	    cout << "Enter name of file to read from: "<<endl;
+	    cin  >> filename;
+	    
+	    ifstream file(filename);
+	    if ( file.is_open() )
+	      {
+		string fileline;
+		while (getline(file,fileline))
+		  {
+		    cin >> x >> y;
+		    gridOne[x][y] = true;
+		  }
+		printGrid(gridOne);
+		break;
+	      }
+	  }
+      } else {
+      for(int i=0;i<n;i++)
+	{
+	  cout << "Enter the coordinates of cell " << i+1 << " : ";
+	  cin >> x >> y;
+	  gridOne[x][y] = true;
+	  printGrid(gridOne);
+	}
     }
 
     cout << "Grid setup is done. Start the game ? (y/n)" << endl;
