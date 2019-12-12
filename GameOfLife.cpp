@@ -51,7 +51,6 @@ void printGrid(bool gridOne[gridSize+1][gridSize+1]);
 void determineState(bool gridOne[gridSize+1][gridSize+1]);
 void clearScreen(void);
 
-void setTextColor(bool r, bool g, bool b);
 
 int main(){
 
@@ -179,17 +178,6 @@ void clearScreen(void) {
 
 }
 
-void setTextColor(bool r, bool g, bool b){
-  #if defined(OS_WIN)
-
-  #elif defined(OS_LINUX) || defined(OS_MAC)
-    string cmdToBuild = "\033[38;" + to_string(r*100) + ";" + to_string(g*100) + ";" + to_string(b*100) + "m";//Sets the text color to r;g;b on POSIX compilate systems
-    cout << g << endl;
-    cin.get();
-    cout << cmdToBuild;
-
-  #endif
-}
 
 void printGrid(bool gridOne[gridSize+1][gridSize+1]){
     for(int a = 1; a < gridSize; a++)
