@@ -39,12 +39,7 @@
   #include <windows.h> // Use for windows
 #endif
 
-
-
 using namespace std;
-
-
-
 
 const int gridSize = 25;
 void printGrid(bool gridOne[gridSize+1][gridSize+1]);
